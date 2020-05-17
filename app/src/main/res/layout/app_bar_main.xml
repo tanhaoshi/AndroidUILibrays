@@ -18,8 +18,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
-                app:popupTheme="@style/AppTheme.PopupOverlay">
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:contentInsetLeft="0dp"
+                app:contentInsetStart="0dp">
             />
+
+            <ImageView
+                    android:id="@+id/base_iv_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left"
+                    android:src="@drawable/ic_launcher_round"
+                    android:paddingLeft="17dp"
+                    android:paddingRight="16dp"/>
+
+            <TextView
+                    android:text="标题"
+                    android:textSize="14sp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
         </androidx.appcompat.widget.Toolbar>
 

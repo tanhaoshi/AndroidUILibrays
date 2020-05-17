@@ -1,7 +1,10 @@
 package com.independent.androiduilibrays
 
+import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import androidx.core.view.GravityCompat
@@ -12,41 +15,92 @@ import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.view.Menu
-import androidx.appcompat.app.ActionBar
-import androidx.core.view.setPadding
+import android.view.View
+import android.view.ViewGroup
+import android.widget.CompoundButton
+import android.widget.ImageView
+import androidx.appcompat.widget.SwitchCompat
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.bumptech.glide.request.RequestOptions
+import com.independent.androiduilibrays.circleimageview.CircleDrawable
+import com.independent.androiduilibrays.glidehelper.GlideRoundTransform
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+
+
+    private lateinit var drawerLayout: DrawerLayout
+
+    override fun onClick(v: View?) {
+        when(v?.id){
+            R.id.base_iv_back ->  drawerLayout.openDrawer(GravityCompat.START)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        drawerLayout = findViewById(R.id.drawer_layout)
 
-        toolbar.title = ""
+        findViewById<ImageView>(R.id.base_iv_back).setOnClickListener(this)
 
-        val drawable : Drawable = resources.getDrawable(R.drawable.ic_launcher_round)
+        findViewById<SwitchCompat>(R.id.sc_settin_testxinlv).setOnCheckedChangeListener(
+            CompoundButton.OnCheckedChangeListener(){ compoundButton: CompoundButton, b: Boolean ->
+                if(b){
 
-        toolbar.navigationIcon = drawable
+                }else{
 
-        setSupportActionBar(toolbar)
+                }
+
+            })
+
+//        val toolbar: Toolbar = findViewById(R.id.toolbar)
+//
+//        toolbar.title = ""
+
+//        val drawable : Drawable
+
+//        Thread(Runnable {
+//            val drawable : Bitmap? = Glide.with(this).asBitmap()
+//                .load(R.mipmap.ic_launcher).submit().get()
+//            runOnUiThread(Runnable {
+//            val cricleDrawable : CircleDrawable = CircleDrawable(drawable)
+//                toolbar.navigationIcon = cricleDrawable
+//            })
+//        }).start()
+
+//        drawable = Glide.with(this)
+//                        .load(R.mipmap.ic_launcher)
+//            .transform(GlideRoundTransform(15)).submit().get()
+//
+//        toolbar.navigationIcon = drawable
+
+//        setSupportActionBar(toolbar)
 
         val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
+
+//        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
+//
+//        drawerLayout.openDrawer(GravityCompat.START)
+
         val navView: NavigationView = findViewById(R.id.nav_view)
+        val params = navView.layoutParams
+        params.width = resources.displayMetrics.widthPixels * 3 / 4
+        navView.layoutParams = params
 
-        val toggle = ActionBarDrawerToggle(
-            this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
-        )
+//        val toggle = ActionBarDrawerToggle(
+//            this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
+//        )
+//
+//        drawerLayout.addDrawerListener(toggle)
 
-        drawerLayout.addDrawerListener(toggle)
-
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
 //        toggle.syncState()
 
@@ -100,8 +154,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             }
         }
-//        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-//        drawerLayout.closeDrawer(GravityCompat.START)
+        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
+        drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
 }
+
+
