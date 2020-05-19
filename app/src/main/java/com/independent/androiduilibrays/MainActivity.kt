@@ -1,5 +1,6 @@
 package com.independent.androiduilibrays
 
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -19,6 +20,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import android.widget.ImageView
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SwitchCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
@@ -28,7 +30,6 @@ import com.independent.androiduilibrays.glidehelper.GlideRoundTransform
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
-
 
     private lateinit var drawerLayout: DrawerLayout
 
@@ -48,11 +49,28 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         findViewById<SwitchCompat>(R.id.sc_settin_testxinlv).setOnCheckedChangeListener(
             CompoundButton.OnCheckedChangeListener(){ compoundButton: CompoundButton, b: Boolean ->
-                if(b){
+
+//                val mode = getResources()?.getConfiguration()?.uiMode & Configuration.UI_MODE_NIGHT_MASK
+
+                var mode : Int = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+//                if (mode == Configuration.UI_MODE_NIGHT_YES) {
+//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+//                } else {
+//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+//                }
+                if(b && (mode == Configuration.UI_MODE_NIGHT_YES)){
+                    Log.i("MainActivity","yes")
+                    delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_NO
+//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
                 }else{
+                    Log.i("MainActivity","No")
+                    delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_YES
+//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
 
                 }
+
+                recreate()
 
             })
 
@@ -79,7 +97,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 //        setSupportActionBar(toolbar)
 
-        val fab: FloatingActionButton = findViewById(R.id.fab)
+        val fab: FloatingActionButton = findViewById<FloatingActionButton>(R.id.fab)
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
